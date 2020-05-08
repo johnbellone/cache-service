@@ -1,0 +1,18 @@
+syntax = "proto3";
+package api;
+option go_package = "api;ping";
+
+import "google/protobuf/wrappers.proto";
+
+service Cache {
+    rpc Put(CacheRequest) returns (CacheResponse) {};
+    rpc Get(CacheRequest) returns (CacheResponse) {};
+}
+
+message CacheRequest {
+    google.protobuf.StringValue key = 1;
+}
+
+message CacheResponse {
+    google.protobuf.StringValue value = 1;
+}
