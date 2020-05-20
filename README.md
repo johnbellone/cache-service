@@ -1,1 +1,1 @@
-# ping-service example
+# cache-service example

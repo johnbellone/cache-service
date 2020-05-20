@@ -1,18 +1,47 @@
 syntax = "proto3";
-package api;
-option go_package = "api;ping";
+package cache.v1;
+option go_package = "github.com/johnbellone/cache-service/protobuf";
 
+import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
+import "google/api/annotations.proto";
 
 service Cache {
-    rpc Put(CacheRequest) returns (CacheResponse) {};
-    rpc Get(CacheRequest) returns (CacheResponse) {};
+    rpc Put(CacheMessage) returns (google.protobuf.Timestamp) {
+        option(google.api.http).post = "/v1/cache";
+    }
+
+    rpc Set(CacheMessage) returns (google.protobuf.Timestamp) {
+        option(google.api.http) = {
+            put: "/v1/cache/{key}"
+            body: "*"
+        };
+    }
+
+    rpc Get(google.protobuf.BytesValue) returns (CacheMessage) {
+        option(google.api.http).get = "/v1/cache/{value}";
+    }
+
+    rpc Delete(google.protobuf.BytesValue) returns (CacheMessage) {
+        option(google.api.http).delete = "/v1/cache/{value}";
+    }
+
+    rpc List(CacheListRequest) returns (CacheListResponse) {
+        option(google.api.http).get = "/v1/cache";
+    }
 }
 
-message CacheRequest {
-    google.protobuf.StringValue key = 1;
+message CacheMessage {
+    bytes key = 1;
+    bytes value = 2;
+    google.protobuf.Timestamp expiration = 3;
 }
 
-message CacheResponse {
-    google.protobuf.StringValue value = 1;
+message CacheListRequest {
+    int32 limit = 1;
+    int32 offset = 2;
+}
+
+message CacheListResponse {
+    repeated CacheMessage items = 1;
 }
