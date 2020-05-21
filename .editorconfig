@@ -1,18 +1,25 @@
+
+; https://editorconfig.org/
+
 root = true
+eclint_indent_style = unset
 
 [*]
-charset = utf-8
-end_of_line = lf
-indent_size = 2
-indent_style = space
 insert_final_newline = true
+charset = utf-8
 trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
 
-[*.go]
+[{Makefile,go.mod,go.sum,*.go,.gitmodules}]
 indent_style = tab
-
-[{Makefile, *.mk}]
-indent_style = tab
+indent_size = 8
 
 [*.proto]
 indent_size = 2
+
+[Dockerfile]
+indent_size = 4
+
+[{WORKSPACE,BUILD.bazel,*.bzl}]
+indent_size = 4
