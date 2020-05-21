@@ -3,8 +3,8 @@ package main
 import (
 	"time"
 
-	"github.com/johnbellone/cache-service/cache"
-	pb "github.com/johnbellone/cache-service/protobuf"
+	"github.com/johnbellone/cache-service/internal/cache"
+	pb "github.com/johnbellone/cache-service/proto/cache"
 	"github.com/micro/go-micro/v2"
 	log "github.com/micro/go-micro/v2/logger"
 )

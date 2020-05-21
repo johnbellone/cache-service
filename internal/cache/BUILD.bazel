@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["handler.go"],
-    importpath = "github.com/johnbellone/cache-service/cache",
+    importpath = "github.com/johnbellone/cache-service/internal/cache",
     visibility = ["//visibility:public"],
-    deps = ["//protobuf:go_default_library"],
+    deps = ["//proto/cache:go_default_library"],
 )

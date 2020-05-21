@@ -399,7 +399,8 @@ go_repository(
 go_repository(
     name = "com_github_coreos_bbolt",
     importpath = "github.com/coreos/bbolt",
-    sum = "h1:n6AiVyVRKQFNb6mJlwESEvvLoDyiTzXX7ORAUlkeBdY=",
+    replace = "go.etcd.io/bbolt",
+    sum = "h1:MUGmc65QhB3pIlaQ5bB4LwqSj6GIonVJXpZiaKNyaKk=",
     version = "v1.3.3",
 )
 
@@ -423,9 +424,8 @@ go_repository(
 go_repository(
     name = "com_github_coreos_go_systemd",
     importpath = "github.com/coreos/go-systemd",
-    replace = "github.com/coreos/go-systemd/v22",
-    sum = "h1:XJIw/+VlJ+87J+doOxznsAWIdmWuViOVhkQamW5YV28=",
-    version = "v22.0.0",
+    sum = "h1:JOrtw2xFKzlg+cbHpyrpLDmnN1HqhBfnX7WDiW7eG2c=",
+    version = "v0.0.0-20190719114852-fd7a80b32e1f",
 )
 
 go_repository(
@@ -564,8 +564,8 @@ go_repository(
 go_repository(
     name = "com_github_envoyproxy_go_control_plane",
     importpath = "github.com/envoyproxy/go-control-plane",
-    sum = "h1:rEvIZUSZ3fx39WIi3JkQqQBitGwpELBIYWeBVh6wn+E=",
-    version = "v0.9.4",
+    sum = "h1:4cmBvAEBNJaGARUEs3/suWRyfyBfhf7I60WBZq+bv2w=",
+    version = "v0.9.1-0.20191026205805-5f8ba28d4473",
 )
 
 go_repository(
@@ -2126,8 +2126,9 @@ go_repository(
 go_repository(
     name = "org_golang_google_grpc",
     importpath = "google.golang.org/grpc",
-    sum = "h1:EC2SB8S04d2r73uptxphDSUG+kTKVgjRPF+N3xpxRB4=",
-    version = "v1.29.1",
+    replace = "google.golang.org/grpc",
+    sum = "h1:2dTRdpdFEEhJYQD8EMLB61nnrzSCTbG38PhqdhvOltg=",
+    version = "v1.26.0",
 )
 
 go_repository(

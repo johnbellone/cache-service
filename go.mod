@@ -3,6 +3,7 @@ module github.com/johnbellone/cache-service
 go 1.14
 
 require (
+	github.com/coreos/bbolt v1.3.4 // indirect
 	github.com/grpc-ecosystem/grpc-gateway v1.14.4 // indirect
 	github.com/micro/go-micro/v2 v2.6.0
 	github.com/pomerium/autocache v0.0.0-20200505053831-8c1cd659f055 // indirect
@@ -16,8 +17,11 @@ require (
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
 
-replace github.com/coreos/go-systemd => github.com/coreos/go-systemd/v22 v22.0.0
-
 replace github.com/coreos/etcd => go.etcd.io/etcd v0.5.0-alpha.5.0.20200306183522-221f0cc107cb
 
-replace github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.4
+replace (
+	github.com/coreos/bbolt => go.etcd.io/bbolt v1.3.3
+	github.com/coreos/bbolt v1.3.4 => go.etcd.io/bbolt v1.3.4
+)
+
+replace google.golang.org/grpc v1.29.1 => google.golang.org/grpc v1.26.0

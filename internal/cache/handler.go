@@ -2,8 +2,7 @@ package cache
 
 import (
 	"context"
-
-	pb "github.com/johnbellone/cache-service/protobuf"
+	pb "github.com/johnbellone/cache-service/proto/cache"
 )
 
 type Handler struct{}

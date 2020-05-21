@@ -1,6 +1,6 @@
 syntax = "proto3";
 package cache.v1;
-option go_package = "github.com/johnbellone/cache-service/protobuf";
+option go_package = "github.com/johnbellone/cache-service/proto/cache";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
