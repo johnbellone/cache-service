@@ -17,7 +17,6 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "google/api/annotations.proto";
 
-
 service Cache {
     rpc Put(CacheMessage) returns (google.protobuf.Timestamp) {
         option(google.api.http).post = "/v1/cache";
