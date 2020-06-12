@@ -1,7 +1,7 @@
 BAZEL		= bazel
 
 .PHONY: build
-build: gazelle
+build:
 	$(BAZEL) build //...
 
 clean:

@@ -4,6 +4,6 @@ go_library(
     name = "go_default_library",
     srcs = ["handler.go"],
     importpath = "github.com/johnbellone/cache-service/internal/cache",
-    visibility = ["//visibility:public"],
+    visibility = ["//:__subpackages__"],
     deps = ["//proto/cache:go_default_library"],
 )
