@@ -7,6 +7,8 @@ for build automation and [Heroku][5] for deployment.
 This is **not** a production service but is meant to serve as an example
 on how to build scalable microservices with Go.
 
+## Development
+
 [0]: https://github.com/micro/go-micro
 [1]: https://micro.mu/docs/go-grpc.html
 [2]: https://developers.google.com/protocol-buffers/docs/proto3
