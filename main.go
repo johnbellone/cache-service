@@ -12,7 +12,7 @@ import (
 
 func main() {
 	service := micro.NewService(
-		micro.Name("cache-service"),
+		micro.Name("go.micro.api.cache"),
 		micro.Version("latest"),
 		micro.RegisterTTL(time.Second*10),
 		micro.RegisterInterval(time.Second*10),
