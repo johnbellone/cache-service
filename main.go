@@ -1,3 +1,4 @@
+//go:generate protoc -Iproto --micro_out=paths=source_relative:./proto --go_out=paths=source_relative:./proto proto/cache/cache_service.proto
 package main
 
 import (
@@ -18,7 +19,7 @@ func main() {
 	)
 
 	service.Init()
-	pb.RegisterCacheHandler(service.Server(), new(cache.Handler))
+	pb.RegisterCacheServer(service.Server(), new(cache.Handler))
 
 	if err := service.Run(); err != nil {
 		log.Fatal(err)

@@ -1,8 +1,7 @@
 # Cache Service
 
 An example Go [Micro][0] service to handle basic caching operations with
-[gRPC][1] transport and [Protobuf][2] as an [IDL][3]. It uses [Bazel][4]
-for build automation and [Heroku][5] for deployment.
+[gRPC][1] transport and [Protobuf][2] as an [IDL][3].
 
 This is **not** a production service but is meant to serve as an example
 on how to build scalable microservices with Go.
@@ -13,5 +12,4 @@ on how to build scalable microservices with Go.
 [1]: https://micro.mu/docs/go-grpc.html
 [2]: https://developers.google.com/protocol-buffers/docs/proto3
 [3]: https://en.wikipedia.org/wiki/IDL_(programming_language)
-[4]: https://bazel.build
 [5]: https://devcenter.heroku.com/articles/getting-started-with-go
