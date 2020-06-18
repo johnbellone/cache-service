@@ -1,0 +1,5 @@
+build:
+  roots:
+    - proto
+  excludes:
+    - proto/google
