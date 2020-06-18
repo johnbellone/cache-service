@@ -19,7 +19,7 @@ func main() {
 	)
 
 	service.Init()
-	pb.RegisterCacheServer(service.Server(), new(cache.Handler))
+	pb.RegisterCacheHandler(service.Server(), new(cache.Handler))
 
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
