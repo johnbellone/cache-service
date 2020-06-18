@@ -11,11 +11,8 @@ on how to build scalable microservices with Go.
 ``` bash
 ~/src/cache-service % make
 ~/src/cache-service % bin/cache-service &
-~/src/cache-service % micro api &
-~/src/cache-service % curl http://localhost:8080/cache/get
-2020-06-17 23:23:04  file=cache/handler.go:29 level=info Received Cache.Get request
-::1 - - [17/Jun/2020:23:23:04 -0400] "GET /cache/get HTTP/1.1" 200 2 "" "curl/7.64.1"
-{}%
+~/src/cache-service % micro web &
+~/src/cache-service % open http://localhost:8082/
 ```
 
 [0]: https://github.com/micro/go-micro
