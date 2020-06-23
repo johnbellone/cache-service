@@ -6,8 +6,8 @@ package cache
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	timestamp "github.com/golang/protobuf/ptypes/timestamp"
-	wrappers "github.com/golang/protobuf/ptypes/wrappers"
+	_ "github.com/golang/protobuf/ptypes/timestamp"
+	_ "github.com/golang/protobuf/ptypes/wrappers"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	math "math"
 )
@@ -51,18 +51,18 @@ func NewCacheEndpoints() []*api.Endpoint {
 			Name:    "Cache.Set",
 			Path:    []string{"/v1/cache/{key}"},
 			Method:  []string{"PUT"},
-			Body:    "*",
+			Body:    "",
 			Handler: "rpc",
 		},
 		&api.Endpoint{
 			Name:    "Cache.Get",
-			Path:    []string{"/v1/cache/{value}"},
+			Path:    []string{"/v1/cache/{key}"},
 			Method:  []string{"GET"},
 			Handler: "rpc",
 		},
 		&api.Endpoint{
 			Name:    "Cache.Delete",
-			Path:    []string{"/v1/cache/{value}"},
+			Path:    []string{"/v1/cache/{key}"},
 			Method:  []string{"DELETE"},
 			Body:    "",
 			Handler: "rpc",
@@ -79,10 +79,10 @@ func NewCacheEndpoints() []*api.Endpoint {
 // Client API for Cache service
 
 type CacheService interface {
-	Put(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*timestamp.Timestamp, error)
-	Set(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*timestamp.Timestamp, error)
-	Get(ctx context.Context, in *wrappers.BytesValue, opts ...client.CallOption) (*CacheMessage, error)
-	Delete(ctx context.Context, in *wrappers.BytesValue, opts ...client.CallOption) (*CacheMessage, error)
+	Put(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*CacheMessage, error)
+	Set(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*CacheMessage, error)
+	Get(ctx context.Context, in *CacheKeyRequest, opts ...client.CallOption) (*CacheMessage, error)
+	Delete(ctx context.Context, in *CacheKeyRequest, opts ...client.CallOption) (*CacheMessage, error)
 	List(ctx context.Context, in *CacheListRequest, opts ...client.CallOption) (*CacheListResponse, error)
 }
 
@@ -98,9 +98,9 @@ func NewCacheService(name string, c client.Client) CacheService {
 	}
 }
 
-func (c *cacheService) Put(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*timestamp.Timestamp, error) {
+func (c *cacheService) Put(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*CacheMessage, error) {
 	req := c.c.NewRequest(c.name, "Cache.Put", in)
-	out := new(timestamp.Timestamp)
+	out := new(CacheMessage)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -108,9 +108,9 @@ func (c *cacheService) Put(ctx context.Context, in *CacheMessage, opts ...client
 	return out, nil
 }
 
-func (c *cacheService) Set(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*timestamp.Timestamp, error) {
+func (c *cacheService) Set(ctx context.Context, in *CacheMessage, opts ...client.CallOption) (*CacheMessage, error) {
 	req := c.c.NewRequest(c.name, "Cache.Set", in)
-	out := new(timestamp.Timestamp)
+	out := new(CacheMessage)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -118,7 +118,7 @@ func (c *cacheService) Set(ctx context.Context, in *CacheMessage, opts ...client
 	return out, nil
 }
 
-func (c *cacheService) Get(ctx context.Context, in *wrappers.BytesValue, opts ...client.CallOption) (*CacheMessage, error) {
+func (c *cacheService) Get(ctx context.Context, in *CacheKeyRequest, opts ...client.CallOption) (*CacheMessage, error) {
 	req := c.c.NewRequest(c.name, "Cache.Get", in)
 	out := new(CacheMessage)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -128,7 +128,7 @@ func (c *cacheService) Get(ctx context.Context, in *wrappers.BytesValue, opts ..
 	return out, nil
 }
 
-func (c *cacheService) Delete(ctx context.Context, in *wrappers.BytesValue, opts ...client.CallOption) (*CacheMessage, error) {
+func (c *cacheService) Delete(ctx context.Context, in *CacheKeyRequest, opts ...client.CallOption) (*CacheMessage, error) {
 	req := c.c.NewRequest(c.name, "Cache.Delete", in)
 	out := new(CacheMessage)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -151,19 +151,19 @@ func (c *cacheService) List(ctx context.Context, in *CacheListRequest, opts ...c
 // Server API for Cache service
 
 type CacheHandler interface {
-	Put(context.Context, *CacheMessage, *timestamp.Timestamp) error
-	Set(context.Context, *CacheMessage, *timestamp.Timestamp) error
-	Get(context.Context, *wrappers.BytesValue, *CacheMessage) error
-	Delete(context.Context, *wrappers.BytesValue, *CacheMessage) error
+	Put(context.Context, *CacheMessage, *CacheMessage) error
+	Set(context.Context, *CacheMessage, *CacheMessage) error
+	Get(context.Context, *CacheKeyRequest, *CacheMessage) error
+	Delete(context.Context, *CacheKeyRequest, *CacheMessage) error
 	List(context.Context, *CacheListRequest, *CacheListResponse) error
 }
 
 func RegisterCacheHandler(s server.Server, hdlr CacheHandler, opts ...server.HandlerOption) error {
 	type cache interface {
-		Put(ctx context.Context, in *CacheMessage, out *timestamp.Timestamp) error
-		Set(ctx context.Context, in *CacheMessage, out *timestamp.Timestamp) error
-		Get(ctx context.Context, in *wrappers.BytesValue, out *CacheMessage) error
-		Delete(ctx context.Context, in *wrappers.BytesValue, out *CacheMessage) error
+		Put(ctx context.Context, in *CacheMessage, out *CacheMessage) error
+		Set(ctx context.Context, in *CacheMessage, out *CacheMessage) error
+		Get(ctx context.Context, in *CacheKeyRequest, out *CacheMessage) error
+		Delete(ctx context.Context, in *CacheKeyRequest, out *CacheMessage) error
 		List(ctx context.Context, in *CacheListRequest, out *CacheListResponse) error
 	}
 	type Cache struct {
@@ -181,18 +181,18 @@ func RegisterCacheHandler(s server.Server, hdlr CacheHandler, opts ...server.Han
 		Name:    "Cache.Set",
 		Path:    []string{"/v1/cache/{key}"},
 		Method:  []string{"PUT"},
-		Body:    "*",
+		Body:    "",
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
 		Name:    "Cache.Get",
-		Path:    []string{"/v1/cache/{value}"},
+		Path:    []string{"/v1/cache/{key}"},
 		Method:  []string{"GET"},
 		Handler: "rpc",
 	}))
 	opts = append(opts, api.WithEndpoint(&api.Endpoint{
 		Name:    "Cache.Delete",
-		Path:    []string{"/v1/cache/{value}"},
+		Path:    []string{"/v1/cache/{key}"},
 		Method:  []string{"DELETE"},
 		Body:    "",
 		Handler: "rpc",
@@ -210,19 +210,19 @@ type cacheHandler struct {
 	CacheHandler
 }
 
-func (h *cacheHandler) Put(ctx context.Context, in *CacheMessage, out *timestamp.Timestamp) error {
+func (h *cacheHandler) Put(ctx context.Context, in *CacheMessage, out *CacheMessage) error {
 	return h.CacheHandler.Put(ctx, in, out)
 }
 
-func (h *cacheHandler) Set(ctx context.Context, in *CacheMessage, out *timestamp.Timestamp) error {
+func (h *cacheHandler) Set(ctx context.Context, in *CacheMessage, out *CacheMessage) error {
 	return h.CacheHandler.Set(ctx, in, out)
 }
 
-func (h *cacheHandler) Get(ctx context.Context, in *wrappers.BytesValue, out *CacheMessage) error {
+func (h *cacheHandler) Get(ctx context.Context, in *CacheKeyRequest, out *CacheMessage) error {
 	return h.CacheHandler.Get(ctx, in, out)
 }
 
-func (h *cacheHandler) Delete(ctx context.Context, in *wrappers.BytesValue, out *CacheMessage) error {
+func (h *cacheHandler) Delete(ctx context.Context, in *CacheKeyRequest, out *CacheMessage) error {
 	return h.CacheHandler.Delete(ctx, in, out)
 }
 

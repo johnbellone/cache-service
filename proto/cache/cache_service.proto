@@ -18,28 +18,29 @@ import "google/protobuf/wrappers.proto";
 import "google/api/annotations.proto";
 
 service Cache {
-    rpc Put(CacheMessage) returns (google.protobuf.Timestamp) {
+    rpc Put(CacheMessage) returns (CacheMessage) {
         option(google.api.http).post = "/v1/cache";
     }
 
-    rpc Set(CacheMessage) returns (google.protobuf.Timestamp) {
-        option(google.api.http) = {
-            put: "/v1/cache/{key}"
-            body: "*"
-        };
+    rpc Set(CacheMessage) returns (CacheMessage) {
+        option(google.api.http).put = "/v1/cache/{key}";
     }
 
-    rpc Get(google.protobuf.BytesValue) returns (CacheMessage) {
-        option(google.api.http).get = "/v1/cache/{value}";
+    rpc Get(CacheKeyRequest) returns (CacheMessage) {
+        option(google.api.http).get = "/v1/cache/{key}";
     }
 
-    rpc Delete(google.protobuf.BytesValue) returns (CacheMessage) {
-        option(google.api.http).delete = "/v1/cache/{value}";
+    rpc Delete(CacheKeyRequest) returns (CacheMessage) {
+        option(google.api.http).delete = "/v1/cache/{key}";
     }
 
     rpc List(CacheListRequest) returns (CacheListResponse) {
         option(google.api.http).get = "/v1/cache";
     }
+}
+
+message CacheKeyRequest {
+    bytes key = 1;
 }
 
 message CacheMessage {
